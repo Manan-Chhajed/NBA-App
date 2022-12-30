@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '/models/team.dart';
+import 'details_page.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -19,7 +20,9 @@ class HomePage extends StatelessWidget {
       final team = Team(
         abbreviation: eachTeam['abbreviation'],
         city: eachTeam['city'],
+        name: eachTeam['name'],
         fullName: eachTeam['full_name'],
+        division: eachTeam['division'],
       );
       teams.add(team);
     }
@@ -50,9 +53,17 @@ class HomePage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListTile(
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailsPage(
+                            team: teams[index],
+                          ),
+                        ),
+                      ),
                       title: Text(teams[index].abbreviation),
                       subtitle: Text(teams[index].city),
-                      trailing: Text(teams[index].fullName),
+                      trailing: Text(teams[index].name),
                     ),
                   ),
                 );
